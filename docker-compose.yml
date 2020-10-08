@@ -1,0 +1,61 @@
+version: "3.3"
+services:
+    mynginx:
+        image: nginx:latest
+        container_name: mynginx
+        ports:
+          - "8080:80"
+        restart: always
+        privileged: true
+        volumes:
+          - ./src/nginx.ini:/etc/nginx/conf.d/default.conf
+          - ./src/php-fpm.conf:/etc/php/7.4/fpm/php-fpm.conf
+          - ./src/www.conf:/etc/php/7.4/fpm/pool.d/www.conf
+          - ./src/:/var/www/html
+        networks:
+          - app-network
+
+    myphp:
+        build: 
+            context: ./src/php
+            dockerfile: dockerfile
+        image: php:7.4-fpm
+        container_name: myphp
+        ports:
+          - "9000:9000"
+        restart: always
+        privileged: true
+        volumes:
+          - ./src/:/var/www/html
+        depends_on:
+          - myredis
+          - mysql
+        networks:
+          - app-network
+    
+    myredis:
+        image: redis:latest
+        container_name: myredis
+        ports:
+          - "6379:6379"
+        restart: always
+        networks:
+          - app-network
+
+    mysql:
+        image: mariadb:latest
+        container_name: mysql
+        ports:
+          - "3306:3306"
+        restart: always
+        environment:
+          MYSQL_ROOT_PASSWORD: MyDBRoot123
+          MYSQL_DATABASE: php
+          MYSQL_USER: php
+          MYSQL_PASSWORD: php
+        networks:
+          - app-network
+
+networks:
+    app-network:
+        driver: bridge
