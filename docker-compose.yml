@@ -16,7 +16,7 @@ services:
           - app-network
 
     myphp:
-        build: 
+        build:
             context: ./src/php
             dockerfile: dockerfile
         image: php:7.4-fpm
@@ -43,19 +43,36 @@ services:
           - app-network
 
     mysql:
-        image: mariadb:latest
-        container_name: mysql
-        ports:
-          - "3306:3306"
-        restart: always
+        image: mysql:latest
+        container_name: dev_mysql
         environment:
-          MYSQL_ROOT_PASSWORD: MyDBRoot123
-          MYSQL_DATABASE: php
-          MYSQL_USER: php
-          MYSQL_PASSWORD: php
+          MYSQL_USER: user
+          MYSQL_PASSWORD: user
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: default_schema
+        volumes:
+           - my-datavolume:/var/lib/mysql
         networks:
           - app-network
+        restart: always
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: dev_pma
+        links:
+          - mysql
+        environment:
+          PMA_HOST: mysql
+          PMA_PORT: 3306
+          PMA_ARBITRARY: 1
+        restart: always
+        networks:
+          - app-network
+        ports:
+          - 9090:80
 
 networks:
     app-network:
         driver: bridge
+volumes:
+     my-datavolume:
