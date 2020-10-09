@@ -1,5 +1,4 @@
 <?php  
-    require_once "Mail.php";
     require 'connectMySQL.php';
     session_start();
     require_once('SMTP.php');

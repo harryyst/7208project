@@ -187,3 +187,12 @@ code {
     min-width: 100%;
     height: 32rem;
   }
+
+  form.hide-submit input[type="submit"] { display: none;}
+/*  */
+  .image1{
+    width: 250px;
+    height: 250px;
+    background-color: grey;
+    float: left;
+  }

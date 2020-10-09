@@ -2,9 +2,9 @@
 class MySQLDatabase {
 
     private $link = null;
-    private $dbhost = 'localhost';
+    private $dbhost = '34.72.198.84:3306';
     private $dbuser = 'root';
-    private $dbpassword = '';
+    private $dbpassword = 'root';
     private $db = 'project';
 
     function connect() {

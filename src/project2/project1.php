@@ -1,5 +1,20 @@
 <?php
-session_start();
+    require 'connectMySQL.php';
+    session_start();
+    $db = new MySQLDatabase();
+    $db->connect();
+    if (isset($_POST["search"])){
+        $_SESSION["item"] = $_POST["search"];
+        $item = $_REQUEST["search"];
+        $query = "SELECT * FROM item WHERE itemname = '$item'";
+        $result = $db->query($query);
+        if ($row = mysqli_fetch_array($result)) {
+            $_SESSION['description'] = $row['description'];
+            $_SESSION['price'] = $row['price'];
+            $_SESSION['type'] = $row['type'];
+            header("Location: Item.php");
+        }
+    }    
 
 ?>
 <!doctype html>
@@ -18,7 +33,7 @@ session_start();
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- Custom styles for this template -->
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style1.css" rel="stylesheet">
 </head>
 
 <body>
@@ -34,15 +49,16 @@ session_start();
             </div>
 
 
-            <form class="form-inline my-2 my-md-0">
-                <input class="form-control" type="text" placeholder="Search" aria-label="Search">
-            </form>
-            <a class="text-muted" href="#">
+            <form class="form-inline my-2 my-md-0 hide-submit" method="POST" action="project1.php">
+            <input class="form-control" type="text" placeholder="Search" aria-label="Search" id="search" name="search">
+                <label>
+                <input type="submit" />
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-3">
                     <circle cx="10.5" cy="10.5" r="7.5"></circle>
                     <line x1="21" y1="21" x2="15.8" y2="15.8"></line>
                 </svg>
-            </a>
+                </label>
+            </form>
 
 
             <div class="col-3 d-flex align-items-center">
