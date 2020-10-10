@@ -1,4 +1,4 @@
-<?php
+<?php	
     require 'connectMySQL.php';
     session_start();
     $db = new MySQLDatabase();
@@ -15,7 +15,6 @@
             header("Location: Item.php");
         }
     }    
-
 ?>
 <!doctype html>
 <html lang="en">
@@ -38,7 +37,7 @@
 
 <body>
 
-
+	<?php echo $_SERVER['REMOTE_ADDR']; ?>
 
     <header class="blog-header py-3">
 
