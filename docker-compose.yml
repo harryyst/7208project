@@ -28,20 +28,10 @@ services:
         volumes:
           - ./src/:/var/www/html
         depends_on:
-          - myredis
           - mysql
         networks:
           - app-network
     
-    myredis:
-        image: redis:latest
-        container_name: myredis
-        ports:
-          - "6379:6379"
-        restart: always
-        networks:
-          - app-network
-
     mysql:
         image: mysql:latest
         container_name: dev_mysql
@@ -52,6 +42,8 @@ services:
           MYSQL_DATABASE: default_schema
         volumes:
            - my-datavolume:/var/lib/mysql
+        ports:
+           - "3306:3306"
         networks:
           - app-network
         restart: always
