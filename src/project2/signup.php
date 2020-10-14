@@ -56,7 +56,7 @@ $notice1="";
           //content
           // $mail->isHTML(true); // Set email format to HTML
           $mail->Subject='Email Verification';
-          $mail->Body= "<a href=\"https://localhost:8080/project1/verify.php?vkey=$vkey\">Register me</a>";
+          $mail->Body= "<a href=\"https://34.123.190.119:8080/project2/verify.php?vkey=$vkey\">Register me</a>";
           
           $mail->AltBody='This is the body in plain text for non-HTML mail clients';
 

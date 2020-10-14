@@ -2,7 +2,7 @@
 class MySQLDatabase {
 
     private $link = null;
-    private $dbhost = '34.72.198.84:3306';
+    private $dbhost = '34.123.190.119:3306';
     private $dbuser = 'root';
     private $dbpassword = 'root';
     private $db = 'project';
