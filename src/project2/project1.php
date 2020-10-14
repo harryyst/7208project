@@ -1,6 +1,15 @@
 <?php	
     require 'connectMySQL.php';
-    session_start();
+  //  echo phpinfo();
+    
+   // $redis = new Redis();
+   // $redis->connect('myredis-master',6379);
+   // $redis->auth('my_master_password');
+    // $redis->set("qwewww","www");//
+    require_once 'SessionManager.php';
+    new SessionManager();
+    $_SESSION['username'] = 'helloweba';
+
     $db = new MySQLDatabase();
     $db->connect();
     if (isset($_POST["search"])){

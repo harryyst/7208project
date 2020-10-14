@@ -1,7 +1,7 @@
 <?php
+    require_once 'SessionManager.php';
     require 'connectMySQL.php';
-    session_start();
-
+    new SessionManager();
     $notice = "";
     $notice1 = "";
     if(isset($_SESSION['email'])){

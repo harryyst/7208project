@@ -1,12 +1,13 @@
 <?php  
     require 'connectMySQL.php';
-    session_start();
     require_once('SMTP.php');
     require_once('PHPMailer.php');
     require_once('Exception.php');
+    require_once 'SessionManager.php';
 
     use \PHPMailer\PHPMailer\PHPMailer;
     use \PHPMailer\PHPMailer\Exception;
+    new SessionManager();
 
 $mail=new PHPMailer(true); // Passing `true` enables exceptions
 

@@ -1,14 +1,17 @@
 <?php 
     require 'connectMySQL.php';
+    
     $db = new MySQLDatabase();
     $db->connect();
-    $itemname = $_POST["itemname"];
-    $description = $_POST["description"];
-    $type = $_POST["type"];
-    $price = $_POST["price"];
-    $sql = "INSERT INTO item (itemname,description,type,price)
-          VALUES ('$itemname', '$description','$type','$price')";
-          $result = $db->query($sql);
+    if(isset($_POST["itemname"]) && isset($_POST["description"])&& isset($_POST["type"]) && isset($_POST["price"])){
+    	$itemname = $_POST["itemname"];
+    	$description = $_POST["description"];
+    	$type = $_POST["type"];
+    	$price = $_POST["price"];
+    	$sql = "INSERT INTO item (itemname,description,type,price)
+         	 VALUES ('$itemname', '$description','$type','$price')";
+          	$result = $db->query($sql);
+     }
 ?>
 <!doctype html>
 <html lang="en">

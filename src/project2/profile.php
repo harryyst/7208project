@@ -1,6 +1,7 @@
 <?php
-require 'connectMySQL.php';
-    session_start();
+    require 'connectMySQL.php';
+    require_once 'SessionManager.php';
+    new SessionManager();
     if(isset($_SESSION["email"])){
       $firstname ='';
         $lastname ='';

@@ -1,6 +1,7 @@
 <?php
     require 'connectMySQL.php';
-    session_start();
+    require_once 'SessionManager.php';
+    new SessionManager();
     $db = new MySQLDatabase();
     $db->connect();
     if (isset($_POST["search"])){
@@ -46,7 +47,7 @@
             </div>
 
 
-            <form class="form-inline my-2 my-md-0 hide-submit" method="POST" action="project1.php">
+            <form class="form-inline my-2 my-md-0 hide-submit" method="POST" action="Item.php">
             <input class="form-control" type="text" placeholder="Search" aria-label="Search" id="search" name="search">
                 <label>
                 <input type="submit" />
