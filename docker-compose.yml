@@ -15,20 +15,48 @@ services:
         networks:
           - app-network
 
-    myphp:
-        build:
-            context: ./src/php
-            dockerfile: dockerfile
-        image: php:7.4-fpm
-        container_name: myphp
-        ports:
-          - "9000:9000"
+    myredis-master:
+        image: 'bitnami/redis:latest'
         restart: always
-        privileged: true
+        user: root
+        ports:
+          - '6379'
+        environment:
+          - REDIS_REPLICATION_MODE=master
+          - REDIS_PASSWORD=my_master_password
+        volumes:
+          - './radis:/bitnami'
+        networks:
+          - app-network
+
+    myredis-replica:
+        image: 'bitnami/redis:latest'
+        user: root
+        restart: always
+        ports:
+          - '6379'
+        depends_on:
+          - myredis-master
+        environment:
+          - REDIS_REPLICATION_MODE=slave
+          - REDIS_MASTER_HOST=myredis-master
+          - REDIS_MASTER_PORT_NUMBER=6379
+          - REDIS_MASTER_PASSWORD=my_master_password
+          - REDIS_PASSWORD=my_replica_password
+        networks:
+          - app-network
+    
+    myphp:
+        build: ./src/php
+        ports:
+          - "9000"
+        restart: always
         volumes:
           - ./src/:/var/www/html
         depends_on:
           - mysql
+          - myredis-master
+          - myredis-replica
         networks:
           - app-network
     
