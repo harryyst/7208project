@@ -1,4 +1,7 @@
 <?php 
+    require 'connectMySQL.php';
+    $db = new MySQLDatabase();
+    $db->connect();
     $itemname = $_POST["itemname"];
     $description = $_POST["description"];
     $type = $_POST["type"];
