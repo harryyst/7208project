@@ -42,7 +42,7 @@
         <div class="row flex-nowrap justify-content-between align-items-center ml-3">
 
             <div class="col">
-                <a class="blog-header-logo text-dark float-left" href="#">Shopping</a>
+                <a class="blog-header-logo text-dark float-left" href="project1.php">Shopping</a>
             </div>
 
 
@@ -64,7 +64,8 @@
                 if (isset($_SESSION["email"])) {
                   echo '<a class=" btn btn-sm btn-outline-secondary nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">user</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown01">
-                        <a class="dropdown-item" href="profile.php">Profile</a>
+			<a class="dropdown-item" href="profile.php">Profile</a>
+                        <a class="dropdown-item" href="Sell.php">Sell</a>
                         <a class="dropdown-item" href="signin.php?logout">Log out</a>
                       </div>
                         ';
