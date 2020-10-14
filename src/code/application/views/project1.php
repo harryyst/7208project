@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- Custom styles for this template -->
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
-    <link rel="stylesheet" href="https://infs3202-4d8d4229.uqcloud.net/code/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="http://34.72.198.84:8080/code/css/style.css" type="text/css" />
 </head>
 
 <body>
@@ -39,7 +39,7 @@
                 </label>
             </form>
             
-
+	
 
             <div class="col-3 d-flex align-items-center">
                 <?php 
@@ -54,7 +54,7 @@
                         </div>
                         ';
                 } else {
-                  echo '<a class="btn btn-sm btn-outline-secondary" href="https://infs3202-4d8d4229.uqcloud.net/code/users">Login/Register</a>';
+                  echo '<a class="btn btn-sm btn-outline-secondary" href="https://34.72.198.84:8080/code/users">Login/Register</a>';
                 }
                 ?>
             </div>

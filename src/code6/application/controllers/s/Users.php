@@ -23,15 +23,12 @@ class Users extends CI_Controller{
         }
 
     public function login() {
-         // add
-        //https://stackoverflow.com/questions/9108376/best-way-to-secure-user-passwords-in-a-mysql-database
-        $salt = "hahaha";
-        $email = $this->input->post('email',true);
-        $password1 = $this->input->post('password',true);
-        $email = $this->db->escape_str($email);
-        $password = sha1($salt.$password1);
-        $password1 = $this->db->escape_str($password);
+        $email = $this->input->post('email');
+        $password = $this->input->post('password');
         $remember = $this->input->post('remember');
+        
+        
+
         if ($this->users_model->authenticate($email, $password)) {
             $_SESSION['email'] = $email;
             if ($remember) {
@@ -45,54 +42,61 @@ class Users extends CI_Controller{
             $this->data['status'] = "Your email or password is incorrect!";
             $this->index();
         }
+        
     }
 
     public function registration(){
-        // add
-        $salt = "hahaha";
-        $password = $this->input->post('password');
-        $password = sha1($salt.$password);
-        $username = $this->input->post('username');
-        $email = $this->input->post('email');
-        $firstname = $this->input->post('firstname');
-        $lastname = $this->input->post('lastname');
-
         $data = array(
-        'username' => $this->db->escape_str($username),
-        'email' => $this->db->escape_str($email),
-        'password' => $this->db->escape_str($password),
-        'firstname'=> $this->db->escape_str($firstname),
-        'lastname' => $this->db->escape_str($lastname),
+        'username' => $this->input->post('username'),
+        'email' => $this->input->post('email'),
+        'password' => $this->input->post('password'),
+        'firstname'=> $this->input->post('firstname'),
+        'lastname' => $this->input->post('lastname'),
         'vkey' => md5(time().'username')
     );
     $this->vkey = $data['vkey'];
     $result = $this->users_model->register_user($data);
     if ($result == TRUE) {
-        $config = array(
-            'protocol'  => 'smtp',
-            'smtp_host' => 'mailhub.eait.uq.edu.au',
-            'smtp_port' => 25,
-            'smtp_user'  => '', 
-            'smtp_pass'  => '', 
-            'smtp_crypto' => 'tls',
-            'mailtype'  => 'html',
-            'charset'    => 'iso-8859-1',
-            'wordwrap'   => TRUE
-            );
-            $mailContent = '<p> confirm mail sharply <a href="https://infs3202-4d8d4229.uqcloud.net/code/users/veri/'.$data['email'].'/'.$data['vkey'].'">click here</a></p>';
-            $this->load->library('email', $config);
-            $this->email->set_newline("\r\n");
-            $this->email->from('infs3202ggclub@nmsl.info');
-            $this->email->to($this->input->post('email'));
-            $this->email->subject("Email Verification");
-            $this->email->message($mailContent);
-            if($this->email->send())
-            {
-                $this->load->view('thankyou');
-            }
+        $this->load->library('phpmailer_lib');
+        
+        // PHPMailer object
+        $mail = $this->phpmailer_lib->load();
+        
+        // SMTP configuration
+        $mail->isSMTP();
+        $mail->Host     = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'harryyst@gmail.com';
+        $mail->Password = 'Yst1997327';
+        $mail->SMTPSecure = 'ssl';
+        $mail->Port     = 465;
+        
+        $mail->setFrom('harryyst@gmail.com', 'Xixi');
+        $mail->addReplyTo('harryyst@gmail.com', 'Xixi');
+        
+        // Add a recipient
+        // $mail->addAddress();
+        
+        // Add cc or bcc 
+        $mail->addCC($data['email']);
+        $mail->addBCC($data['email']);
+        
+        // Email subject
+        $mail->Subject = 'Email Verification';
+        
+        // Set email format to HTML
+        $mail->isHTML(true);
+        
+        // Email body content
+        $mailContent = '<p> confirm mail sharply <a href="http://localhost:8080/code/users/veri/'.$data['email'].'/'.$data['vkey'].'">click here</a></p>';
+        $mail->Body = $mailContent;
         
         // Send email
-    
+        if(!$mail->send()){
+            echo 'Mailer Error: ' . $mail->ErrorInfo;
+        }else{
+            $this->load->view('thankyou');
+        }
     
     } else {
     $data['message_display'] = 'Username or Email already exist!';
@@ -120,7 +124,6 @@ class Users extends CI_Controller{
     public function profile(){
         $this->load->view('profile');
     }
-    
     public function profile_detail(){
         $key =''; 
 		if(isset($_SESSION['email'])){

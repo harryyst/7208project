@@ -54,6 +54,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['papers/(:num)'] = 'papers/read/$1';
 $route['papers'] = 'papers';
 $route['(:num)'] = 'papers/read/$1';
-$route['default_controller'] = 'papers';
+$route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

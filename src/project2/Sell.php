@@ -75,7 +75,6 @@
     <input type="text" id="price" name="price" class="form-control" placeholder="price" required autofocus>
    
         <!-- <p class="ss mt-3">Image:</p> -->
-        <!-- <?php echo form_open_multipart('upload/do_upload'); ?> -->
         <!-- <input type='file' name='userfile' size='20'/><br/><br/> -->
         <!-- <input type="submit" value="upload"/> -->
     <button class="mt-3 btn btn-lg btn-primary btn-block" id="sell" type="submit" value="sell" name="sell">Sell</button>
